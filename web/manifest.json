@@ -1,6 +1,6 @@
 {
-    "name": "parkpaedia",
-    "short_name": "parkpaedia",
+    "name": "parkpedia",
+    "short_name": "parkpedia",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

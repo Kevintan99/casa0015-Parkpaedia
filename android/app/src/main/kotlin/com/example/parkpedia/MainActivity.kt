@@ -1,4 +1,4 @@
-package com.example.parkpaedia
+package com.example.parkpedia
 
 import io.flutter.embedding.android.FlutterActivity
 
