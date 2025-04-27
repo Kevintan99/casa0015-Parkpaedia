@@ -1,4 +1,5 @@
-# parkpedia
+# Parkpedia
+# An encyclopaedia for all the Parks in London
 
 A new Flutter project.
 
