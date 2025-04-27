@@ -1,6 +1,6 @@
 # PARKPAEDIA 📚
 
-## App Description
+### App Description
 **PARKPAEDIA** is a mobile application that serves as an interactive encyclopedia for parks across London. It aims to educate users—especially kids, nature lovers, and citizen scientists about the diverse species (birds, insects, plants, animals) cohabiting within these green spaces.
 
 ## Features ✨
