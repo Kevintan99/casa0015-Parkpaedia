@@ -1,24 +1,35 @@
-# .github/workflows/pages.yml
+# .github/workflows/deploy.yml
 name: Deploy Landing Page
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  pages:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       pages: write
       id-token: write
+      contents: read
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # Package and upload the landingpage folder as-is
-      - uses: actions/upload-pages-artifact@v1
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
           path: landingpage
 
-      - uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
