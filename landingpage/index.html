@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkpaedia &mdash; Your Parking Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2a9d8f;
+      --dark: #264653;
+      --light: #f4f4f4;
+      --font: 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); color: var(--dark); line-height: 1.6; }
+    header { 
+      position: relative;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                  url('../assets/images/background.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+    header h1 { 
+      font-size: 2.5rem; 
+      margin-bottom: .5rem;
+      position: relative;
+      z-index: 1;
+    }
+    header p { 
+      font-size: 1.2rem; 
+      max-width: 600px; 
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    header img {
+      position: relative;
+      z-index: 1;
+    }
+    header .btn {
+      position: relative;
+      z-index: 1;
+    }
+    .btn { display: inline-block; padding: .75rem 1.5rem; background: #fff; color: var(--primary); border-radius: 4px; font-weight: 600; text-decoration: none; transition: background .3s; }
+    .btn:hover { background: var(--light); }
+    .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+    .features { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+    .feature { background: var(--light); padding: 1.5rem; border-radius: 8px; }
+    .feature h3 { margin-bottom: .75rem; color: var(--primary); }
+    .screenshots {
+      text-align: center;
+      padding: 2rem 0;
+    }
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(250px, 300px));
+      gap: 2rem;
+      margin: 2rem auto;
+      justify-content: center;
+      max-width: 1200px;
+    }
+    .screenshot-item {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .screenshot-img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease;
+      object-fit: contain;
+    }
+    .screenshot-img:hover {
+      transform: scale(1.05);
+    }
+    .screenshot-desc {
+      color: var(--dark);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 1024px) {
+      .screenshot-grid {
+        grid-template-columns: repeat(2, minmax(250px, 300px));
+      }
+    }
+    @media (max-width: 640px) {
+      .screenshot-grid {
+        grid-template-columns: minmax(250px, 300px);
+      }
+    }
+    footer { background: #222; color: #ccc; padding: 2rem 1rem; text-align: center; font-size: .9rem; }
+    @media (max-width: 600px) {
+      .features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="../assets/icon/app_icon.png" alt="Parkpaedia Logo" style="width: 100px; height: 100px; margin-bottom: 1rem;">
+    <h1>Parkpaedia</h1>
+    <p>Your personal guide to discovering and identifying the diverse species in London's parks.</p>
+    <a href="#download" class="btn">Download Now</a>
+  </header>
+
+  <section class="container" id="solution">
+    <div style="max-width: 800px; margin: 3rem auto; text-align: center;">
+      <h2 style="color: var(--dark); margin-bottom: 1.5rem;">Turn Every Park Visit into a Discovery! 🔍</h2>
+      <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark); margin-bottom: 2rem;">
+        Every visit to a park can feel like a missed opportunity when you spot a bird or flower but can't remember its name or where and when you saw it. Our app turns that frustration into discovery by giving you instant, park-specific field guides and a simple camera interface that logs every sighting with the exact time and location. No more fumbling through bulky books or fragmented apps: you get a concise species catalog for your chosen park, AI-backed photo uploads, and a personal dashboard to track and revisit your favorite finds. It's the seamless way to deepen your nature knowledge and capture every moment of your outdoor adventures.
+      </p>
+    </div>
+  </section>
+
+  <section class="container" id="features">
+    <h2 style="text-align: center; color: var(--dark);">Key Features ✨</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Park-Specific Guides</h3>
+        <p>Pick your park and instantly access its curated list of local species.</p>
+      </div>
+      <div class="feature">
+        <h3>Snap & Save</h3>
+        <p>Take or upload photos that are auto-time-stamped and geotagged.</p>
+      </div>
+      <div class="feature">
+        <h3>Compact Species Cards</h3>
+        <p>View each species' image, taxonomy, origin and category at a glance.</p>
+      </div>
+      <div class="feature">
+        <h3>Personalized Dashboard</h3>
+        <p>Like ❤️ your favorite species and review your photos with interactive maps and dates.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="screenshots container">
+    <h2>App Screenshots 📱</h2>
+    <div class="screenshot-grid">
+      <div class="screenshot-item">
+        <img src="../assets/images/park_selection_page.png" alt="Parkpaedia Start Page" class="screenshot-img">
+        <p class="screenshot-desc">Select the park that you want to visit.</p>
+      </div>
+      <div class="screenshot-item">
+        <img src="../assets/images/home_page.png" alt="Park Selection with Species List" class="screenshot-img">
+        <p class="screenshot-desc">A list of species available in your selected park.</p>
+      </div>
+      <div class="screenshot-item">
+        <img src="../assets/images/species_detail_page.png" alt="Species Detail View" class="screenshot-img">
+        <p class="screenshot-desc">Detailed information about the species you selected.</p>
+      </div>
+      <div class="screenshot-item">
+        <img src="../assets/images/camera_page.png" alt="Camera Interface" class="screenshot-img">
+        <p class="screenshot-desc">Choose to take a photo or upload one from gallery</p>
+      </div>
+      <div class="screenshot-item">
+        <img src="../assets/images/user_page.png" alt="User Collection Page" class="screenshot-img">
+        <p class="screenshot-desc">View your collection of liked species and uploaded photos here.</p>
+      </div>
+      <div class="screenshot-item">
+        <img src="../assets/images/uploaded_photo_page.png" alt="Photo Upload View" class="screenshot-img">
+        <p class="screenshot-desc">Each uploaded photos comes with timestamp and location data</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" id="contact">
+    <h2 style="text-align: center; color: var(--dark);">Contact Us ☎️</h2>
+    <div style="text-align: center; margin: 2rem auto; max-width: 600px;">
+      <p style="margin-bottom: 1rem;">Have questions or feedback about Parkpaedia? We'd love to hear from you!</p>
+      <div class="contact-info">
+        <p><strong>Email:</strong> <a href="mailto:jan.tan.24@ucl.ac.uk" style="color: var(--primary); text-decoration: none;">jan.tan.24@ucl.ac.uk</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" id="download">
+    <h2 style="text-align: center; color: var(--dark);">Get the App 📲</h2>
+    <p style="text-align: center; margin-bottom: 2rem;">Available on iOS and Android.</p>
+    <div style="text-align: center; gap: 1rem; display: flex; justify-content: center; flex-wrap: wrap;">
+      <a href="#" class="btn">App Store</a>
+      <a href="#" class="btn">Google Play</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Parkpaedia. All rights reserved.
+  </footer>
+</body>
+</html>
