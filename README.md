@@ -1,3 +1,4 @@
+<p align="center"><img align="center" width="300" src="./assets/icon/app_icon.png"></p>
 # PARKPAEDIA 
 
 A new Flutter project.
