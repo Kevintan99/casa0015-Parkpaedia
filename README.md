@@ -1,16 +1,25 @@
-# parkkkkkkk
+# PARKPAEDIA 
 
 A new Flutter project.
 
-## Getting Started
+## App Description
 
-This project is a starting point for a Flutter application.
+## Key Features ✨
 
-A few resources to get you started if this is your first Flutter project:
+## User Persona 🎯
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Screens
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Storyboard
+
+## Core Technologies
+
+## Development Environment
+
+## Installation Process
+- Install Flutter and Dart
+- Install a simulation device (Android or IOS)
+
+## Contact Details
+Feel free to contact me at the email provided below if you have any questions or feedbacks regarding the application.
+Email: Jan.tan.24@ucl.ac.uk
