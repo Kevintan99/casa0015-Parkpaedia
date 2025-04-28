@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/species.dart';
-import '../services/firebase_service.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class SpeciesDetailScreen extends StatefulWidget {
   final Species species;
@@ -13,7 +13,6 @@ class SpeciesDetailScreen extends StatefulWidget {
 }
 
 class _SpeciesDetailScreenState extends State<SpeciesDetailScreen> {
-  final FirebaseService _firebaseService = FirebaseService();
   bool _isLiked = false;
 
   @override
@@ -22,13 +21,26 @@ class _SpeciesDetailScreenState extends State<SpeciesDetailScreen> {
     _checkLikeStatus();
   }
 
-  Future<void> _checkLikeStatus() async {
-    _firebaseService.getLikedSpecies().listen((likedSpecies) {
-      if (mounted) {
-        setState(() {
-          _isLiked = likedSpecies.contains(widget.species.id);
-        });
+  void _checkLikeStatus() {
+    final box = Hive.box('liked_species');
+    final liked = List<String>.from(box.get('ids', defaultValue: <String>[]));
+    setState(() {
+      _isLiked = liked.contains(widget.species.id);
+    });
+  }
+
+  void _toggleLike() {
+    final box = Hive.box('liked_species');
+    final liked = List<String>.from(box.get('ids', defaultValue: <String>[]));
+    setState(() {
+      if (_isLiked) {
+        liked.remove(widget.species.id);
+        _isLiked = false;
+      } else {
+        liked.add(widget.species.id);
+        _isLiked = true;
       }
+      box.put('ids', liked);
     });
   }
 
@@ -43,12 +55,7 @@ class _SpeciesDetailScreenState extends State<SpeciesDetailScreen> {
               _isLiked ? Icons.favorite : Icons.favorite_border,
               color: _isLiked ? Colors.red : null,
             ),
-            onPressed: () {
-              setState(() {
-                _isLiked = !_isLiked;
-              });
-              _firebaseService.toggleLikeSpecies(widget.species.id, _isLiked);
-            },
+            onPressed: _toggleLike,
           ),
         ],
       ),
@@ -58,15 +65,12 @@ class _SpeciesDetailScreenState extends State<SpeciesDetailScreen> {
           children: [
             Hero(
               tag: widget.species.id,
-              child: CachedNetworkImage(
-                imageUrl: widget.species.imageUrl,
+              child: Image.network(
+                widget.species.imageUrl,
                 height: 300,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorBuilder: (ctx, o, st) => const Icon(Icons.error),
               ),
             ),
             Padding(
@@ -75,8 +79,8 @@ class _SpeciesDetailScreenState extends State<SpeciesDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.species.family,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    'Family: ${widget.species.family}',
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -89,15 +93,6 @@ class _SpeciesDetailScreenState extends State<SpeciesDetailScreen> {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    'Description',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.species.description,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
                 ],
               ),
             ),

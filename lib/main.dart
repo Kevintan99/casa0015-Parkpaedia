@@ -4,12 +4,28 @@ import 'firebase_options.dart';
 import 'screens/home_tab.dart';
 import 'screens/camera_tab.dart';
 import 'screens/user_tab.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'models/user_photo.dart';
+import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserPhotoAdapter());
+  await Hive.openBox('liked_species');
+  await Hive.openBox('user_photos');
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    // If Firebase is already initialized, we can ignore the error
+    if (e.toString().contains('duplicate-app')) {
+      print('Firebase already initialized');
+    } else {
+      rethrow;
+    }
+  }
   runApp(const MyApp());
 }
 
@@ -27,7 +43,11 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const ParkSelectionPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/park_selection': (context) => const ParkSelectionPage(),
+      },
     );
   }
 }
@@ -46,72 +66,93 @@ class _ParkSelectionPageState extends State<ParkSelectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'PARKPAEDIA',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF2E7D32),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background image
+          Image.asset(
+            'assets/images/background.jpg', // or use Image.network for an online image
+            fit: BoxFit.cover,
+          ),
+          // Foreground content
+          Container(
+            color: Colors.white.withOpacity(0.5), // Optional: add a white overlay for readability
+          ),
+          SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'PARKPAEDIA',
+                    style: TextStyle(
+                      fontSize: 60,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2E7D32),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 40),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: DropdownButton<String>(
-                    hint: const Text('Select Park'),
-                    value: selectedPark,
-                    isExpanded: true,
-                    underline: Container(),
-                    items: parks.map((String park) {
-                      return DropdownMenuItem<String>(
-                        value: park,
-                        child: Text(park),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-    setState(() {
-                        selectedPark = newValue;
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: selectedPark == null
-                      ? null
-                      : () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  MainNavigationScreen(selectedPark: selectedPark!),
+                  const SizedBox(height: 40),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: DropdownButton<String>(
+                      hint: const Text(
+                        'Select Park',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16, // Optional: adjust size as needed
+                        ),
+                      ),
+                      value: selectedPark,
+                      isExpanded: true,
+                      underline: Container(),
+                      items: parks.map((String park) {
+                        return DropdownMenuItem<String>(
+                          value: park,
+                          child: Text(
+                            park,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16, // Optional: adjust size as needed
                             ),
-                          );
-                        },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2E7D32),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedPark = newValue;
+                        });
+                      },
+                    ),
                   ),
-                  child: const Text('Enter'),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: selectedPark == null
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MainNavigationScreen(selectedPark: selectedPark!),
+                              ),
+                            );
+                          },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2E7D32),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    ),
+                    child: const Text('Enter'),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -162,51 +203,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-// Placeholder widgets for the tabs
-class HomeTab extends StatelessWidget {
-  final String parkName;
-
-  const HomeTab({super.key, required this.parkName});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(parkName),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-      body: const Center(
-        child: Text('Home Tab - Species List'),
-      ),
-    );
-  }
-}
-
-class CameraTab extends StatelessWidget {
-  const CameraTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Camera Tab'),
-    );
-  }
-}
-
-class UserTab extends StatelessWidget {
-  const UserTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('User Tab'),
     );
   }
 }

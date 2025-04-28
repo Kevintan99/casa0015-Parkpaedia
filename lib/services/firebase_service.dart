@@ -17,10 +17,15 @@ class FirebaseService {
         .collection('species')
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => Species.fromMap(doc.data(), doc.id))
-          .toList();
-    });
+          print('💧 getSpecies for $parkName → \\${snapshot.docs.length} docs');
+          return snapshot.docs
+              .map((doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                print('  • doc \\${doc.id}: \\${data}');
+                return Species.fromMap(data, doc.id);
+              })
+              .toList();
+        });
   }
 
   // Get filtered species by type
@@ -32,10 +37,15 @@ class FirebaseService {
         .where('type', isEqualTo: type)
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => Species.fromMap(doc.data(), doc.id))
-          .toList();
-    });
+          print('💧 getFilteredSpecies for $parkName, type=$type → \\${snapshot.docs.length} docs');
+          return snapshot.docs
+              .map((doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                print('  • doc \\${doc.id}: \\${data}');
+                return Species.fromMap(data, doc.id);
+              })
+              .toList();
+        });
   }
 
   // Search species by name
@@ -48,10 +58,15 @@ class FirebaseService {
         .where('name', isLessThan: searchTerm + 'z')
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => Species.fromMap(doc.data(), doc.id))
-          .toList();
-    });
+          print('💧 searchSpecies for $parkName, searchTerm=$searchTerm → \\${snapshot.docs.length} docs');
+          return snapshot.docs
+              .map((doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                print('  • doc \\${doc.id}: \\${data}');
+                return Species.fromMap(data, doc.id);
+              })
+              .toList();
+        });
   }
 
   // Upload a photo with location data

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import '../services/firebase_service.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import '../models/user_photo.dart';
 
 class CameraTab extends StatefulWidget {
   const CameraTab({super.key});
@@ -41,12 +45,25 @@ class _CameraTabState extends State<CameraTab> {
         desiredAccuracy: LocationAccuracy.high,
       );
 
-      // Upload photo with location data
-      await _firebaseService.uploadPhoto(image, position);
+      // Save photo to app's local directory
+      final appDir = await getApplicationDocumentsDirectory();
+      final fileName = 'parkpaedia_${DateTime.now().millisecondsSinceEpoch}_${image.name}';
+      final localPath = '${appDir.path}/$fileName';
+      await File(image.path).copy(localPath);
+
+      // Save photo metadata to Hive
+      final userPhotosBox = Hive.box('user_photos');
+      final userPhoto = UserPhoto(
+        filePath: localPath,
+        latitude: position.latitude,
+        longitude: position.longitude,
+        timestamp: DateTime.now(),
+      );
+      userPhotosBox.add(userPhoto);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Photo uploaded successfully')),
+          const SnackBar(content: Text('Photo saved to My Photos!')),
         );
       }
     } catch (e) {
