@@ -19,9 +19,10 @@ A new Flutter project.
 ### Installation Process
 - Install Flutter and Dart
 - Install a simulation device (Android or IOS)
+  
 ```bash
-git clone
-cd
+git clone https://github.com/Kevintan99/casa0015-Parkpaedia.git
+cd casa0015-Parkpaedia
 flutter pub get
 flutter run
 ```
