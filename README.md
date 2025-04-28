@@ -1,5 +1,5 @@
 <p align="center"><img align="center" width="300" src="./assets/icon/app_icon.png"></p>
-# PARKPAEDIA 
+<h1 align="center">PARKPAEDIA</h1>  
 
 A new Flutter project.
 
