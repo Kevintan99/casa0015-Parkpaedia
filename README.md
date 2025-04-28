@@ -22,4 +22,5 @@ A new Flutter project.
 
 ### Contact Details
 Feel free to contact me at the email provided below if you have any questions or feedbacks regarding the application.
+  
 Email: Jan.tan.24@ucl.ac.uk
