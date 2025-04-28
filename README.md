@@ -2,24 +2,24 @@
 
 A new Flutter project.
 
-## App Description
+### App Description
 
-## Key Features ✨
+### Key Features ✨
 
-## User Persona 🎯
+### User Persona 🎯
 
-## Screens
+### Screens
 
-## Storyboard
+### Storyboard
 
-## Core Technologies
+### Core Technologies
 
-## Development Environment
+### Development Environment
 
-## Installation Process
+### Installation Process
 - Install Flutter and Dart
 - Install a simulation device (Android or IOS)
 
-## Contact Details
+### Contact Details
 Feel free to contact me at the email provided below if you have any questions or feedbacks regarding the application.
 Email: Jan.tan.24@ucl.ac.uk
