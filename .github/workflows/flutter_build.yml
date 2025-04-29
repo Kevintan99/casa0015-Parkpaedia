@@ -65,7 +65,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            build/app/outputs/bundle/release/*.aab,
+            build/app/outputs/bundle/release/*.aab
             build/app/outputs/flutter-apk/*.apk
           tag: "v${{ steps.get_flutter_app_version.outputs.TAG_VERSION }}"
           allowUpdates: true
