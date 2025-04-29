@@ -68,4 +68,5 @@ jobs:
             build/app/outputs/bundle/release/*.aab,
             build/app/outputs/flutter-apk/*.apk
           tag: "v${{ steps.get_flutter_app_version.outputs.TAG_VERSION }}"
+          overwrite: true
           # token: ${{ secrets.PERSONAL_RELEASE_TOKEN }}
