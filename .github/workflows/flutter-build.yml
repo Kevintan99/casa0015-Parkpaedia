@@ -11,10 +11,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Flutter
-        uses: flutter/setup-flutter@v2
+      - name: Setup Flutter SDK
+        uses: flutter-actions/setup-flutter@v4    # use the correct repo and tag :contentReference[oaicite:0]{index=0}
         with:
-          flutter-version: 'stable'
+          channel: stable                         # install from the stable channel :contentReference[oaicite:1]{index=1}
+          version: latest                         # get the latest release on that channel :contentReference[oaicite:2]{index=2}
 
       - name: Install dependencies
         run: flutter pub get
